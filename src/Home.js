@@ -1,21 +1,31 @@
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Drawer } from './Drawer'
 import { Header } from './Header'
 
 export function Home() {
+  const { data } = useQuery({
+    queryKey: ['videos'],
+    queryFn: () => axios.get('/api/video').then((res) => res.data),
+  })
   return (
     <div>
       <Header />
       <div className="flex">
         <Drawer />
         <div className="flex flex-wrap p-3">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((label) => (
-            <Link to={`/watch/${label}`} key={label}>
-              <div className="w-[311px] h-[174px] m-3 bg-slate-400 text-stone-100 flex justify-center items-center">
-                {label}
-              </div>
-            </Link>
-          ))}
+          {data && data.videos
+            ? data.videos.map((videoMeta) => (
+                <Link to={`/watch/${videoMeta.key}`} key={videoMeta.key}>
+                  <img
+                    src={`/api/video/thumbnail?key=${videoMeta.thumbnailKey}`}
+                    className="w-[311px] h-[174px] m-3 bg-slate-400"
+                    alt="thumbnail"
+                  />
+                </Link>
+              ))
+            : null}
         </div>
       </div>
     </div>

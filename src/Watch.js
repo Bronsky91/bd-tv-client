@@ -19,7 +19,13 @@ export function Watch() {
       <div className="flex">
         <Drawer />
         <div className="flex-1 p-3 flex flex-col">
-          <video className="w-full mb-2" src={`/video/${videoId}`} controls />
+          <video
+            className="w-full mb-2"
+            src={`/api/video/stream?key=${videoId}`}
+            controls
+            autoPlay
+            muted
+          />
           <div className="font-medium text-stone-700 mb-2">
             Awesome Video Title About Something You NEED TO KNOW
           </div>
