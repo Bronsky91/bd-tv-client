@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export function Header() {
+  const location = useLocation()
+
   return (
     <div className="flex items-center h-[88px]">
       <Link to="/" className="flex-shrink-0 mr-4 h-[88px] w-[219px]">
@@ -24,16 +26,18 @@ export function Header() {
         </div>
       </div>
 
-      <div className="h-[88px]">
-        <Link to="/upload" className="flex flex-col relative">
-          <span className="h-[74px] mx-4 text-[74px] leading-[74px] text-emerald-400 -translate-y-[10px]">
-            +
-          </span>
-          <span className="text-[10px] text-center select-none text-emerald-400 -translate-y-[20px]">
-            Upload
-          </span>
-        </Link>
-      </div>
+      {location.pathname !== '/upload' ? (
+        <div className="h-[88px]">
+          <Link to="/upload" className="flex flex-col relative">
+            <span className="h-[74px] mx-4 text-[74px] leading-[74px] text-emerald-400 -translate-y-[10px]">
+              +
+            </span>
+            <span className="text-[10px] text-center select-none text-emerald-400 -translate-y-[20px]">
+              Upload
+            </span>
+          </Link>
+        </div>
+      ) : null}
     </div>
   )
 }
