@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { API_URL } from '../constants'
+import { API_URL } from './constants'
 import { Drawer } from './Drawer'
 import { Header } from './Header'
 

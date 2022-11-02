@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { API_URL } from '../constants'
+import { API_URL } from './constants'
 import { Drawer } from './Drawer'
 import { Header } from './Header'
 
