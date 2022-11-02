@@ -29,12 +29,13 @@ export function Home() {
         <div className="flex flex-wrap p-3 h-1">
           {data && data.videos
             ? data.videos.map((videoMeta) => (
-                <Link to={`/watch/${videoMeta.key}`} key={videoMeta.key}>
+                <Link to={`/watch/${videoMeta._id}`} key={videoMeta.key}>
                   <img
                     src={`${API_URL}/api/video/thumbnail?key=${videoMeta.thumbnailKey}`}
                     className="w-[311px] h-[174px] m-3 bg-slate-400"
                     alt="thumbnail"
                   />
+                  <div className="text-center">{videoMeta?.title}</div>
                 </Link>
               ))
             : null}

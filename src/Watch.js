@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
 import { API_URL } from './constants'
 import { Drawer } from './Drawer'
@@ -15,6 +17,14 @@ const comments = [
 export function Watch() {
   const { videoId } = useParams()
 
+  const { data } = useQuery({
+    queryKey: [`get video - ${videoId}`],
+    queryFn: () =>
+      axios
+        .get(API_URL + `/api/video/byid`, { params: { id: videoId } })
+        .then((res) => res.data?.video),
+  })
+
   return (
     <div>
       <Header />
@@ -23,14 +33,12 @@ export function Watch() {
         <div className="flex-1 p-3 flex flex-col">
           <video
             className="w-full mb-2"
-            src={`${API_URL}/api/video/stream?key=${videoId}`}
+            src={`${API_URL}/api/video/stream?key=${data?.key}`}
             controls
             autoPlay
             muted
           />
-          <div className="font-medium text-stone-700 mb-2">
-            Awesome Video Title About Something You NEED TO KNOW
-          </div>
+          <div className="font-medium text-stone-700 mb-2">{data?.title}</div>
           <div className="mb-2 text-stone-700">
             <span className="bg-slate-400 rounded-[50%] text-xl p-1 mr-2">
               🧔
@@ -38,11 +46,7 @@ export function Watch() {
             Mr. BD TV Guy
             <div></div>
           </div>
-          <div className="text-stone-700 text-sm mb-4">
-            Lorem ipsum video description something about BD. Really cool
-            feature that is easily explained in a video that would otherwise
-            take a long time to understand with other formats.
-          </div>
+          <div className="text-stone-700 text-sm mb-4">{data?.description}</div>
           <div>
             <div className="text-stone-700">{comments.length} Comments</div>
             {comments.map((comment) => (
