@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { API_URL } from '../constants'
 import { Drawer } from './Drawer'
 import { Header } from './Header'
 
@@ -21,7 +22,7 @@ export function Watch() {
         <div className="flex-1 p-3 flex flex-col">
           <video
             className="w-full mb-2"
-            src={`/api/video/stream?key=${videoId}`}
+            src={`${API_URL}/api/video/stream?key=${videoId}`}
             controls
             autoPlay
             muted
