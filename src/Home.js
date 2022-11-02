@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { useState } from 'react'
+import { useDebounce } from 'use-debounce'
+
 import { Link } from 'react-router-dom'
 import { API_URL } from './constants'
 import { Drawer } from './Drawer'
@@ -7,16 +10,23 @@ import { Header } from './Header'
 import { Upload } from './Upload'
 
 export function Home() {
+  const [query, setQuery] = useState('')
+  const [searchQuery] = useDebounce(query, 300)
+
   const { data } = useQuery({
-    queryKey: ['videos'],
-    queryFn: () => axios.get(API_URL + '/api/video').then((res) => res.data),
+    queryKey: [`video search - ${searchQuery}`],
+    queryFn: () =>
+      axios
+        .get(API_URL + '/api/video/search', { params: { term: searchQuery } })
+        .then((res) => res.data),
   })
+
   return (
     <div>
-      <Header />
-      <div className="flex">
+      <Header query={query} setQuery={setQuery} />
+      <div className="flex h-screen">
         <Drawer />
-        <div className="flex flex-wrap p-3">
+        <div className="flex flex-wrap p-3 h-1">
           {data && data.videos
             ? data.videos.map((videoMeta) => (
                 <Link to={`/watch/${videoMeta.key}`} key={videoMeta.key}>

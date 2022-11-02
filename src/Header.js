@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 
-export function Header() {
+export function Header({ query, setQuery }) {
   const location = useLocation()
 
   return (
@@ -13,6 +13,7 @@ export function Header() {
         <input
           className="flex-1 w-full max-w-2xl p-3 border border-slate-400 rounded mt-2 ring-slate-400 outline-slate-400"
           placeholder="Search..."
+          onChange={(event) => setQuery(event.target.value)}
         />
         <div className="flex items-center mt-2 flex-1">
           {['Planning', 'Mobile', 'Vault', 'QA', 'CX'].map((label) => (

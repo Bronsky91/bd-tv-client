@@ -1,21 +1,39 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useLocation } from 'react-router-dom'
+import { ThreeDots } from 'react-loader-spinner'
 import { API_URL } from './constants'
 
 export function Upload() {
   const location = useLocation()
   const [file, setFile] = useState(null)
-  const { register, handleSubmit } = useForm()
+  const [loading, setLoading] = useState(true)
+  const [videoData, setVideoData] = useState({})
+  const { register, handleSubmit, reset } = useForm()
 
   const onSubmit = (data) => {
     console.log(data)
-    // window.history.back()
+    const { _id } = videoData
+    const { title, description } = data
+    axios
+      .patch(
+        API_URL + '/api/video',
+        { _id, title, description },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .finally((res) => {
+        window.history.back()
+      })
   }
 
   const handleFile = (file) => {
-    console.log(file)
+    setLoading(true)
+
     const formData = new FormData()
     formData.append('video', file)
     axios
@@ -25,10 +43,20 @@ export function Upload() {
         },
       })
       .then((res, rej) => {
-        console.log({ res, rej })
+        const { data } = res
+        setVideoData(data)
+      })
+      .finally((err) => {
+        setLoading(false)
       })
     setFile(file)
   }
+
+  useEffect(() => {
+    if (videoData.keywords) {
+      reset({ keywords: videoData.keywords })
+    }
+  }, [videoData, reset])
 
   if (!location.search.includes('upload')) return null
 
@@ -36,7 +64,7 @@ export function Upload() {
     <div
       className="absolute left-0 right-0 top-0 bottom-0 bg-slate-500/50 cursor-default"
       onClick={(ev) => {
-        if (ev.target !== ev.currentTarget) return
+        if (ev.target !== ev.currentTarget || loading) return
         setFile(null)
         window.history.back()
       }}
@@ -45,6 +73,7 @@ export function Upload() {
         {file ? (
           <div className="flex-1 p-4 bg-slate-400 text-stone-100">
             <div className="text-center mb-7">{file.name}</div>
+            {/* <div className="text-center mb-7">file name</div> */}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <label>
@@ -71,13 +100,30 @@ export function Upload() {
                   {...register('keywords')}
                   className="flex-1 w-full max-w-2xl p-3 border border-slate-400 rounded mt-2 ring-slate-400 outline-slate-400 text-stone-700 mb-7"
                   autoComplete="off"
+                  disabled
                 />
               </label>
-
-              <input
-                type="submit"
-                className="float-right py-2 px-6 bg-slate-500 rounded-md"
-              />
+              <div>
+                {loading ? (
+                  <div className="flex flex-col justify-center items-center">
+                    <ThreeDots
+                      height="80"
+                      width="80"
+                      radius="9"
+                      color="#767b94"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      visible={true}
+                    />
+                    <div>File uploading...</div>
+                  </div>
+                ) : (
+                  <input
+                    type="submit"
+                    className="py-2 px-6 bg-slate-500 rounded-md float-right"
+                  />
+                )}
+              </div>
             </form>
           </div>
         ) : (
