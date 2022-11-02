@@ -38,7 +38,7 @@ export function Watch() {
             autoPlay
             muted
           />
-          <div className="font-medium text-stone-700 mb-2">{data?.title}</div>
+          <div className="font-bold text-stone-700 mb-2">{data?.title}</div>
           <div className="mb-2 text-stone-700">
             <span className="bg-slate-400 rounded-[50%] text-xl p-1 mr-2">
               🧔
@@ -46,9 +46,17 @@ export function Watch() {
             Mr. BD TV Guy
             <div></div>
           </div>
+
+          <div className="text-stone-700 font-medium">Description:</div>
           <div className="text-stone-700 text-sm mb-4">{data?.description}</div>
+          <div className="text-stone-700 font-medium">Keywords:</div>
+          <div className="text-stone-700 text-sm mb-4">
+            {data?.keywords.join(', ')}
+          </div>
           <div>
-            <div className="text-stone-700">{comments.length} Comments</div>
+            <div className="text-stone-700 font-medium">
+              {comments.length} Comments
+            </div>
             {comments.map((comment) => (
               <div key={comment} className="text-stone-700 text-xs p-3">
                 {comment}
