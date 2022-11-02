@@ -26,18 +26,19 @@ export function Header() {
         </div>
       </div>
 
-      {location.pathname !== '/upload' ? (
-        <div className="h-[88px]">
-          <Link to="/upload" className="flex flex-col relative">
-            <span className="h-[74px] mx-4 text-[74px] leading-[74px] text-emerald-400 -translate-y-[10px]">
-              +
-            </span>
-            <span className="text-[10px] text-center select-none text-emerald-400 -translate-y-[20px]">
-              Upload
-            </span>
-          </Link>
-        </div>
-      ) : null}
+      <div className="h-[88px]">
+        <Link
+          to={location.pathname + '?upload=1'}
+          className="flex flex-col relative"
+        >
+          <span className="h-[74px] mx-4 text-[74px] leading-[74px] text-emerald-400 -translate-y-[10px]">
+            +
+          </span>
+          <span className="text-[10px] text-center select-none text-emerald-400 -translate-y-[20px]">
+            Upload
+          </span>
+        </Link>
+      </div>
     </div>
   )
 }

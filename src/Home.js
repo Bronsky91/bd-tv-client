@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { API_URL } from './constants'
 import { Drawer } from './Drawer'
 import { Header } from './Header'
+import { Upload } from './Upload'
 
 export function Home() {
   const { data } = useQuery({
@@ -29,6 +30,7 @@ export function Home() {
             : null}
         </div>
       </div>
+      <Upload />
     </div>
   )
 }
