@@ -22,11 +22,11 @@ export function Home() {
   })
 
   return (
-    <div>
+    <>
       <Header query={query} setQuery={setQuery} />
-      <div className="flex h-screen">
+      <div className="flex h-full">
         <Drawer />
-        <div className="flex flex-wrap p-3 h-1">
+        <div className="flex flex-wrap p-3 pb-[128px] h-full overflow-scroll">
           {data && data.videos
             ? data.videos.map((videoMeta) => (
                 <Link to={`/watch/${videoMeta._id}`} key={videoMeta.key}>
@@ -42,6 +42,6 @@ export function Home() {
         </div>
       </div>
       <Upload />
-    </div>
+    </>
   )
 }

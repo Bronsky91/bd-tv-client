@@ -11,11 +11,11 @@ export function Header({ query, setQuery }) {
 
       <div className="my-2 w-full">
         <input
-          className="flex-1 w-full max-w-2xl p-3 border border-slate-400 rounded mt-2 ring-slate-400 outline-slate-400"
+          className="flex-1 w-full max-w-2xl p-2 border border-slate-400 rounded mt-2 ring-slate-400 outline-slate-400"
           placeholder="Search..."
           onChange={(event) => setQuery(event.target.value)}
         />
-        <div className="flex items-center mt-2 flex-1">
+        <div className="flex items-center mt-[.28rem] flex-1">
           {['Planning', 'Mobile', 'Vault', 'QA', 'CX'].map((label) => (
             <div
               key={label}

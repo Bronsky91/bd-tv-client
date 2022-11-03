@@ -8,7 +8,7 @@ import { API_URL } from './constants'
 export function Upload() {
   const location = useLocation()
   const [file, setFile] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [videoData, setVideoData] = useState({})
   const { register, handleSubmit, reset } = useForm()
 
